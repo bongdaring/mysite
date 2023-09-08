@@ -17,6 +17,13 @@ public class UserController extends HttpServlet {
 		if("joinform".equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/views/user/joinform.jsp")
 			.forward(request, response);
+		} else if("join".equals(action)) {
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			String gender = request.getParameter("gender");
+			
+			System.out.println(name + ": "+email+":"+password+":"+gender);
 		}
 	}
 
