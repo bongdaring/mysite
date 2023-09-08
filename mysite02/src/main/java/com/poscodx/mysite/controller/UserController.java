@@ -10,6 +10,7 @@ import com.poscodx.web.mvc.Action;
 import com.poscodx.mysite.web.mvc.user.JoinAction;
 import com.poscodx.mysite.web.mvc.user.JoinFormAction;
 import com.poscodx.mysite.web.mvc.user.JoinSuccessAction;
+import com.poscodx.mysite.web.mvc.user.UserActionFactory;
 
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,21 +19,7 @@ public class UserController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String actionName = request.getParameter("a");
-		Action action = null;
-		
-		if("joinform".equals(actionName)) {
-			action = new JoinFormAction();
-		} else if("join".equals(actionName)) {
-			action = new JoinAction();	
-		} else if("joinsuccess".equals(actionName)) {
-			action = new JoinSuccessAction();
-		}
-		
-		if(action == null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}
-		
+		Action action = new UserActionFactory().getAction(actionName);
 		action.execute(request, response);
 	}
 

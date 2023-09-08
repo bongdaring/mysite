@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.poscodx.mysite.dao.UserDao;
 import com.poscodx.mysite.vo.UserVo;
 import com.poscodx.web.mvc.Action;
+import com.poscodx.web.utils.WebUtil;
 
 public class JoinAction implements Action {
 
@@ -29,7 +30,6 @@ public class JoinAction implements Action {
 		new UserDao().insert(userVo);
 		
 		response.sendRedirect(request.getContextPath()+"/user?a=joinsuccess");
-		
 	}
 	
 }
