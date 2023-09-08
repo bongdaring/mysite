@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.poscodx.mysite.dao.GuestBookDao;
 import com.poscodx.mysite.vo.GuestBookVo;
-
-
+import com.poscodx.mysite.web.mvc.guestbook.GuestBookFactory;
+import com.poscodx.mysite.web.mvc.user.UserActionFactory;
+import com.poscodx.web.mvc.Action;
 
 
 public class GuestBookController extends HttpServlet {
@@ -21,48 +22,10 @@ public class GuestBookController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String action = request.getParameter("a");
+		String actionName = request.getParameter("a");
 		
-		if("insert".equals(action)) {
-			request.setCharacterEncoding("utf-8");
-
-			String name = request.getParameter("name");
-			String password = request.getParameter("password");
-			String contents = request.getParameter("content");
-			
-			GuestBookVo vo = new GuestBookVo();
-			vo.setName(name);
-			vo.setPassword(password);
-			vo.setContents(contents);
-
-			new GuestBookDao().insert(vo);
-			
-			response.sendRedirect(request.getContextPath()+"/guestbook");
-			
-		} else if("deleteform".equals(action)) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/guestbook/deleteform.jsp");
-			rd.forward(request, response);
-
-		} else if("delete".equals(action)){
-			String no = request.getParameter("no");	
-			String password = request.getParameter("password");
-
-			GuestBookVo vo = new GuestBookDao().findByNo(Integer.parseInt(no));
-			
-			if(vo.getPassword().equals(password)){
-				new GuestBookDao().deleteByNo(Integer.parseInt(no));
-			} 
-
-			response.sendRedirect(request.getContextPath()+"/guestbook");
-			
-		} else {
-			List<GuestBookVo> list = new GuestBookDao().findAll();
-			request.setAttribute("list", list);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/guestbook/index.jsp");
-			rd.forward(request, response);
-
-		}
-		
+		Action action = new GuestBookFactory().getAction(actionName);
+		action.execute(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
