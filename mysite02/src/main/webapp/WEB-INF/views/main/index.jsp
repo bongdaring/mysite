@@ -1,21 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
+<head>
+<title>mysite</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link href="<%=request.getContextPath() %>/assets/css/main.css" rel="stylesheet" type="text/css">
+</head>
 <body>
 	<div id="container">
 		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
-		<div id="header">
-			<h1>MySite</h1>
-			<ul>
-				<li><a href="<%=request.getContextPath() %>/user?a=loginform">로그인</a><li>
-				<li><a href="<%=request.getContextPath() %>/user?a=joinform">회원가입</a><li>
-				<li><a href="<%=request.getContextPath() %>/user?a=updateform">회원정보수정</a><li>
-				<li><a href="<%=request.getContextPath() %>/user?a=logout">로그아웃</a><li>
-				<li>님 안녕하세요 ^^;</li>
-			</ul>
-		</div>
+
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
