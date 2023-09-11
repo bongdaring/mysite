@@ -35,7 +35,7 @@ public class GuestBookDao {
 				int no = rs.getInt(1);
 				String name = rs.getString(2);
 				String password = rs.getString(3);
-				String contents = rs.getString(4).replaceAll("\n", "<br>");
+				String contents = rs.getString(4);
 				String registerDate = rs.getString(5);
 				
 				GuestBookVo vo = new GuestBookVo();

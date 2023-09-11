@@ -9,11 +9,17 @@
   <packaging>war</packaging>
   
     <dependencies>
-	  <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+	  <!-- mariadb Driver -->
 	<dependency>
 	    <groupId>org.mariadb.jdbc</groupId>
 	    <artifactId>mariadb-java-client</artifactId>
 	    <version>3.0.8</version>
+	</dependency>
+		<!-- jstl -->
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
 	</dependency>
   </dependencies>
   

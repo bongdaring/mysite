@@ -32,6 +32,9 @@ public class UpdateAction implements Action {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("authUser", userVo);
 		
+		UserVo resultVo = new UserDao().findByNo(no);
+		request.setAttribute("vo", resultVo);
+		
 		WebUtil.forward("user/updateform", request, response);
 	}
 
