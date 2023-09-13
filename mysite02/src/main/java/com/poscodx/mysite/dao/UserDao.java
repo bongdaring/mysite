@@ -111,7 +111,7 @@ public class UserDao {
 			conn = getConnection();
 			
 			String sql =
-					"select email, password, gender from user where no=?";
+					"select email, password, gender, name from user where no=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -123,12 +123,15 @@ public class UserDao {
 				String email = rs.getString(1);
 				String password = rs.getString(2);
 				String gender = rs.getString(3);
+				String name = rs.getString(4);
 				
 				userVo = new UserVo();
 				userVo.setEmail(email);
 				userVo.setPassword(password);
 				userVo.setGender(gender);
+				userVo.setName(name);
 			}
+			
 			
 		} catch (SQLException e) {
 			System.out.println("error:"+e);
