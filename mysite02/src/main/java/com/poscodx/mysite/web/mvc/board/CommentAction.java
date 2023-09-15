@@ -16,12 +16,13 @@ public class CommentAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		HttpSession session = request.getSession(true);
+		UserVo userVo = (UserVo)session.getAttribute("authUser");
+		
 		Long no = Long.parseLong(request.getParameter("no"));
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-	
-		HttpSession session = request.getSession(true);
-		UserVo userVo = (UserVo)session.getAttribute("authUser");
 		
 		BoardVo parentVo = new BoardDao().findByNo(no);
 		new BoardDao().updateOrderNo(parentVo.getgNo(), parentVo.getoNo()+1);

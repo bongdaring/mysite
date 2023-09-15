@@ -10,7 +10,6 @@ public class BoardFactory implements ActionFactory {
 	public Action getAction(String actionName) {
 		Action action = null;
 		
-		System.out.println("actionName:"+actionName);
 		if("write".equals(actionName)) {
 			action = new WriteFormAction();		
 		} else if("insert".equals(actionName)) {

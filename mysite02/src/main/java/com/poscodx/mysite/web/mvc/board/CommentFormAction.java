@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 
 import com.poscodx.web.mvc.Action;
 import com.poscodx.web.utils.WebUtil;
@@ -13,8 +15,13 @@ public class CommentFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		WebUtil.forward("board/write", request, response);
-
+		HttpSession session = request.getSession(true);
+		
+		if(session.getAttribute("authUser") == null) {
+			WebUtil.forward("user/loginform", request, response);
+		} else {
+			WebUtil.forward("board/write", request, response);
+		}
 	}
 
 }
