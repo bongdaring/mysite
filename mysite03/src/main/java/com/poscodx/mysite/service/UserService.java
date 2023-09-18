@@ -14,17 +14,23 @@ public class UserService {
 //	@Autowired
 //	private MailSender mailSender;
 	
-	
 	public void join(UserVo vo) {
 		userRepository.insert(vo);
 		
 		//메일 보내기
 //		mailSender.send(vo.getEmail(), "", "");
-		
-		
 	}
 
 	public UserVo getUser(String email, String password) {
 		return userRepository.findByEmailAndPassword(email, password);
+	}
+
+	public UserVo getUser(Long no) {
+		return userRepository.findByNo(no);
+	}
+
+	public void update(UserVo userVo) {
+		userRepository.update(userVo);
+		
 	}
 }

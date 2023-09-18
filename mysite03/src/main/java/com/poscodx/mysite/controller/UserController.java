@@ -65,8 +65,8 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/update")
-	public String update(HttpSession session) {
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	public String update(HttpSession session, Model model) {
 		// Access Control(접근제어)
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
@@ -75,7 +75,27 @@ public class UserController {
 		}
 		///////////////////////////////////////////////
 		
+		UserVo userVo = userService.getUser(authUser.getNo());
+		model.addAttribute("userVo", userVo);
+		
 		return "user/update";
 	}
 
-}
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(UserVo userVo, HttpSession session) {
+		// Access Control(접근제어)
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser == null) {
+			return "redirect:/user/login";
+		}
+		///////////////////////////////////////////////
+		userVo.setNo(authUser.getNo());
+		userService.update(userVo);
+		
+		authUser.setName(userVo.getName());
+		
+		return "redirect:/user/update";
+	}
+		
+	}
