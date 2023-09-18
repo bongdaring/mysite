@@ -22,7 +22,6 @@
 					<input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
 				</form>
-				<input type="hidden" name="page" value="${page }">
 
 				<table class="tbl-ex">
 					<tr>
@@ -42,7 +41,7 @@
 									<img
 										src="${pageContext.request.contextPath }/assets/images/reply.png" />
 								</c:if> <a
-								href="${pageContext.request.contextPath }/board?a=select&no=${vo.no }&email=${vo.userEmail }">${vo.title }</a></td>
+								href="${pageContext.request.contextPath }/board/view?no=${vo.no }">${vo.title }</a></td>
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.registerDate }</td>
@@ -68,7 +67,6 @@
 									href="${pageContext.request.contextPath }/board?page=${page-1 }">◀</a></li>
 							</c:otherwise>
 						</c:choose>
-
 						<c:forEach begin="0" end="${totalpage-1 }" step="1" var="i">
 							<c:choose>
 								<c:when test="${page eq (i+1) }">
@@ -98,7 +96,7 @@
 
 				<c:if test="${not empty authUser }">
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath }/board?a=write"
+						<a href="${pageContext.servletContext.contextPath }/board/write"
 							id="new-book">글쓰기</a>
 					</div>
 				</c:if>

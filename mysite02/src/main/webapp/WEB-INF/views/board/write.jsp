@@ -19,10 +19,6 @@
 				<form class="board-form" method="post"
 					action="${pageContext.request.contextPath }/board">
 					<c:choose>
-						<c:when test="${not empty param.no and not empty vo.title }">
-							<input type="hidden" name="a" value="update">
-							<input type='hidden' name="no" value="${param.no }">
-						</c:when>
 						<c:when test="${not empty param.no }">
 							<input type="hidden" name="a" value="comment">
 							<input type='hidden' name="no" value="${param.no }">
@@ -38,24 +34,12 @@
 						</tr>
 						<tr>
 							<td class="label">제목</td>
-							<c:choose>
-								<c:when test="${not empty vo.title }">
-									<td><input type="text" name="title" value="${vo.title }"></td>
-								</c:when>
-								<c:otherwise>
-									<td><input type="text" name="title" value=""></td>
-								</c:otherwise>
-							</c:choose>
+							<td><input type="text" name="title" value=""></td>
 						</tr>
 						<tr>
 							<td class="label">내용</td>
 							<c:choose>
-								<c:when test="${not empty vo.content }">
-									<td><textarea id="content" name="content">${vo.content }</textarea></td>
-								</c:when>
-								<c:otherwise>
-									<td><textarea id="content" name="content"></textarea></td>
-								</c:otherwise>
+								<td><textarea id="content" name="content"></textarea></td>
 							</c:choose>
 
 						</tr>

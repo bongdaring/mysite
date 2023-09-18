@@ -21,7 +21,7 @@
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			<![CDATA[
-				select last_inert_id();
+				select last_insert_id()
 			]]>
 		</selectKey>
 	</insert>

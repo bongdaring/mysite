@@ -26,7 +26,7 @@ public class UpdateFormAction implements Action {
 			BoardVo readBoardVo = new BoardDao().findByNo(Long.parseLong(no));
 			request.setAttribute("vo", readBoardVo);
 			
-			WebUtil.forward("board/write", request, response);
+			WebUtil.forward("board/modify", request, response);
 		}
 		
 

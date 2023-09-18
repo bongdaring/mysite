@@ -17,21 +17,7 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post"
-					action="${pageContext.request.contextPath }/board">
-					<c:choose>
-						<c:when test="${not empty param.no and not empty vo.title }">
-							<input type="hidden" name="a" value="update">
-							<input type='hidden' name="no" value="${param.no }">
-						</c:when>
-						<c:when test="${not empty param.no }">
-							<input type="hidden" name="a" value="comment">
-							<input type='hidden' name="no" value="${param.no }">
-						</c:when>
-
-						<c:otherwise>
-							<input type="hidden" name="a" value="insert">
-						</c:otherwise>
-					</c:choose>
+					action="${pageContext.request.contextPath }/board/write">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>

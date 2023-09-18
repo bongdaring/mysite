@@ -18,7 +18,6 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board" class="board-form">
-			<input type='hidden' name="no" value="${vo.no }">
 				<table class="tbl-ex">
 					<tr>
 						<th colspan="2">글보기</th>
@@ -39,7 +38,7 @@
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?page=1">글목록</a>
 					<c:if test="${not empty authUser and authUser.email eq vo.userEmail }">
-							<a href="${pageContext.servletContext.contextPath }/board?a=updateform&no=${vo.no }">글수정 </a>
+							<a href="${pageContext.servletContext.contextPath }/board/modify?&no=${vo.no }">글수정 </a>
 					</c:if>	
 					<c:if test="${not empty authUser }">
 						<a href="${pageContext.servletContext.contextPath }/board?a=commentform&no=${vo.no }" id="new-book">답글 달기</a>
