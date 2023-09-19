@@ -11,8 +11,8 @@
 <body>
 	<h1>Exception Thrown</h1>
 	
-	<p>
+	<pre>
 		${errors }
-	</p>
+	</pre>
 </body>
 </html>
