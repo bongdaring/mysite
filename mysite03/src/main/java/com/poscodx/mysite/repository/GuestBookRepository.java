@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
 import com.poscodx.mysite.vo.GuestBookVo;
 
 @Repository
@@ -17,10 +18,8 @@ public class GuestBookRepository {
 	private SqlSession session;
 	
 	public List<GuestBookVo> findAll() {
-		
 		// 여러가지 xml에 있을 수 있기 때문에 namespace(guestbook)도 같이 넣어줘야 함
-		List<GuestBookVo> result = session.selectList("guestbook.findAll");
-		return result;
+		return session.selectList("guestbook.findAll");
 	}
 	
 	public boolean insert(GuestBookVo vo) {

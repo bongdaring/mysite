@@ -38,10 +38,10 @@
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?page=1">글목록</a>
 					<c:if test="${not empty authUser and authUser.email eq vo.userEmail }">
-							<a href="${pageContext.servletContext.contextPath }/board/modify?&no=${vo.no }">글수정 </a>
+							<a href="${pageContext.servletContext.contextPath }/board/modify/${vo.no }">글수정 </a>
 					</c:if>	
 					<c:if test="${not empty authUser }">
-						<a href="${pageContext.servletContext.contextPath }/board?a=commentform&no=${vo.no }" id="new-book">답글 달기</a>
+						<a href="${pageContext.servletContext.contextPath }/board/write/${vo.no }" id="new-book">답글 달기</a>
 					</c:if>
 				</div>
 			</div>

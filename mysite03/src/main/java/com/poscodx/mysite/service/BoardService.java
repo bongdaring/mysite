@@ -47,7 +47,7 @@ public class BoardService {
 		return boardRepository.findAll().size();
 	}
 	
-	public BoardVo findBoardByNo(int no) {
+	public BoardVo findBoardByNo(Long no) {
 		boardRepository.updateHitByNo(no);
 		BoardVo boardVo = boardRepository.findByNo(no);
 		UserVo userVo = userRepository.findByNo(boardVo.getUserNo());
@@ -58,6 +58,14 @@ public class BoardService {
 	public void addBoard(BoardVo boardVo, UserVo authUser) {
 		boardVo.setUserNo(authUser.getNo());
 		boardRepository.insert(boardVo);
+	}
+
+	public void updateBoard(Long no, BoardVo boardVo) {
+		boardRepository.updateBoard(no, boardVo);
+	}
+
+	public void deleteBoardByNo(Long no) {
+		boardRepository.deleteByNo(no);
 	}
 
 

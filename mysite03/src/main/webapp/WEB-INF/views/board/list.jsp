@@ -41,13 +41,13 @@
 									<img
 										src="${pageContext.request.contextPath }/assets/images/reply.png" />
 								</c:if> <a
-								href="${pageContext.request.contextPath }/board/view?no=${vo.no }">${vo.title }</a></td>
+								href="${pageContext.request.contextPath }/board/view/${vo.no }">${vo.title }</a></td>
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.registerDate }</td>
 							<c:if test="${authUser.email eq vo.userEmail }">
 								<td><a
-									href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no }"
+									href="${pageContext.request.contextPath }/board/delete/${vo.no }"
 									class="del">삭제</a></td>
 							</c:if>
 						</tr>

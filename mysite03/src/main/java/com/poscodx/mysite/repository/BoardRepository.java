@@ -311,7 +311,7 @@ public class BoardRepository {
 		
 	}
 	
-	public BoardVo updateBoard(Long no, String title, String content) {
+	public BoardVo updateBoard(Long no, BoardVo boardVo) {
 		BoardVo vo = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -322,16 +322,16 @@ public class BoardRepository {
 
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, title);
-			pstmt.setString(2, content);
+			pstmt.setString(1, boardVo.getTitle());
+			pstmt.setString(2, boardVo.getContent());
 			pstmt.setLong(3, no);
 			
 			pstmt.executeQuery();
 			
 			vo = new BoardVo();
 			vo.setNo(no);
-			vo.setTitle(title);
-			vo.setContent(content);
+			vo.setTitle(boardVo.getTitle());
+			vo.setContent(boardVo.getContent());
 			
 		} catch (SQLException e) {
 			System.out.println("error:"+e);

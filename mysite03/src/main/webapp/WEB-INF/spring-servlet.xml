@@ -10,13 +10,12 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- 
-		Validator
-		Default Servlet Handler
-		Message Converter
-	 -->
+	<!-- auto proxy -->
+	<aop:aspectj-autoproxy />
+
+	<!-- Validator Default Servlet Handler Message Converter -->
 	<mvc:annotation-driven />
-	
+
 	<!-- Default Servlet Handler -->
 	<mvc:default-servlet-handler />
 	<!-- View Resolver -->
