@@ -20,6 +20,8 @@ public class MeasureExecutionTimeAspect {
 		
 		Object result = pjp.proceed();
 		
+		
+		
 		// after
 		sw.stop();
 		long totalTime = sw.getTotalTimeMillis();
