@@ -12,9 +12,10 @@ import com.poscodx.mysite.vo.BoardVo;
 public class BoardRepository {
 	@Autowired
 	private SqlSession session;
+	private final int PAGE_SIZE = 5;
 	
 	public List<BoardVo> findAllByPage(int page, int totalSize) {
-		return session.selectList("board.findAllByPage", page*5);
+		return session.selectList("board.findAllByPage", page*PAGE_SIZE);
 	}
 	
 	public List<BoardVo> findAll() {
@@ -51,8 +52,8 @@ public class BoardRepository {
 		return boardVo;
 	}
 	
-	public void deleteByNo(Long no) {
-		session.delete("board.deleteByNo", no);
+	public void deleteByNo(BoardVo boardVo) {
+		session.delete("board.deleteByNo", boardVo);
 	}
 
 }

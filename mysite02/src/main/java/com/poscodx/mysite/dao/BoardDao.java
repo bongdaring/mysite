@@ -349,7 +349,7 @@ public class BoardDao {
 		
 	}
 	
-	public void deleteByNo(Long no) {
+	public void deleteByNo(Long no, String email) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -357,9 +357,10 @@ public class BoardDao {
 			conn = getConnection();
 			
 			String sql =
-					"delete from board where no=?";
+					"delete from board b join user u on b.user_no = u.no where b.no=? and (select no from user where email=?)";
 			pstmt = conn.prepareStatement(sql);		
 			pstmt.setLong(1, no);
+			pstmt.setString(2, email);
 			
 			pstmt.executeQuery();
 			

@@ -2,8 +2,6 @@ package com.poscodx.mysite.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poscodx.mysite.security.Auth;
+import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
@@ -25,10 +25,7 @@ public class BoardController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getBoardList(Model model,
 			@RequestParam(value = "page", required = true, defaultValue = "1") int page) {
-		if (page < 1) {
-			page = 1;
-		}
-
+		
 		int totalSize = boardService.getTotalSize();
 		int totalPage = boardService.getTotalPage(totalSize);
 		List<BoardVo> boardList = boardService.findAllList(page);
@@ -39,20 +36,23 @@ public class BoardController {
 		return "board/list";
 	}
 
+	
+	// @ModelAttribute를 사용하면 model.addAttribute 없이 자동으로 주입 가능?
 	@RequestMapping(value = "/view/{no}", method = RequestMethod.GET)
 	public String getBoardByNo(Model model, @PathVariable(value = "no", required = true) Long no) {
-
 		BoardVo boardVo = boardService.findBoardByNo(no);
 		model.addAttribute("vo", boardVo);
 		return "board/view";
 	}
-
+	
+	@Auth
 	@RequestMapping(value = "/write", 
 			method = RequestMethod.GET)
 	public String writeBoard() {
 		return "board/write";
 	}
 	
+	@Auth
 	@RequestMapping(value = "/write/{no}", 
 			method = RequestMethod.GET)
 	public String commendBoard(Model model, @PathVariable(value = "no", required = true) Long no) {
@@ -60,12 +60,10 @@ public class BoardController {
 		return "board/write";
 	}
 	
+	@Auth
 	@RequestMapping(value = "/write/{no}", 
 			method = RequestMethod.POST)
-	public String commendBoard(HttpSession session, BoardVo boardVo, @PathVariable(value = "no", required = true) Long no) {
-		this.checkUser(session);
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		
+	public String commendBoard(@AuthUser UserVo authUser, BoardVo boardVo, @PathVariable(value = "no", required = true) Long no) {		
 		boardService.commandBoard(no, boardVo, authUser);
 		return "redirect:/board";
 	}
@@ -76,46 +74,35 @@ public class BoardController {
 		return "board/write";
 	}
 
+	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String writeBoard(HttpSession session, BoardVo boardVo) {
-
-		this.checkUser(session);
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-
+	public String writeBoard(@AuthUser UserVo authUser, BoardVo boardVo) {
 		boardService.addBoard(boardVo, authUser);
 		return "redirect:/board";
 	}
 
+	@Auth
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.GET)
-	public String updateBoard(HttpSession session, Model model, @PathVariable(value = "no", required = true) Long no) {
-		this.checkUser(session);
+	public String updateBoard(@AuthUser UserVo authUser, Model model, @PathVariable(value = "no", required = true) Long no) {
 		BoardVo boardVo = boardService.findBoardByNo(no);
 		model.addAttribute("vo", boardVo);
 		return "board/modify";
 	}
 
+	@Auth
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.POST)
-	public String updateBoard(HttpSession session, BoardVo boardVo, Model model,
+	public String updateBoard(@AuthUser UserVo authUser, BoardVo boardVo, Model model,
 			@PathVariable(value = "no", required = true) Long no) {
-
-		this.checkUser(session);
 		boardService.updateBoard(no, boardVo);
 		model.addAttribute("vo", boardVo);
 		return "redirect:/board/view/" + no;
 	}
-
+	
+	@Auth
 	@RequestMapping(value = "/delete/{no}", method = RequestMethod.GET)
-	public String deleteBoardByNo(HttpSession session, @PathVariable(value = "no", required = true) Long no) {
-		this.checkUser(session);
-		boardService.deleteBoardByNo(no);
+	public String deleteBoardByNo(@AuthUser UserVo authUser, @PathVariable(value = "no", required = true) Long no) {
+		boardService.deleteBoardByNo(no, authUser);
 		return "redirect:/board?page=1";
 	}
 
-	private String checkUser(HttpSession session) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			return "redirect:/user/login";
-		}
-		return "";
-	}
 }

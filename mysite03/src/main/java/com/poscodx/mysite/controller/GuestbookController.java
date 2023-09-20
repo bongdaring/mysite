@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.service.GuestbookService;
 import com.poscodx.mysite.vo.GuestBookVo;
 
@@ -19,6 +20,7 @@ public class GuestbookController {
 	@Autowired
 	private GuestbookService guestbookService;
 	
+	@Auth // 액세tm 제어하는 부분에 달거임
 	@RequestMapping("/")
 	public String main(Model model) {
 		List<GuestBookVo> list = guestbookService.getContentsList();

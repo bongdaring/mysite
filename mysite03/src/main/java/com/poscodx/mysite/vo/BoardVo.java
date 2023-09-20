@@ -2,6 +2,7 @@ package com.poscodx.mysite.vo;
 
 public class BoardVo {
 	private Long no;
+	private int listNo;
 	private String title;
 	private String content;
 	private String userName;
@@ -13,6 +14,12 @@ public class BoardVo {
 	private int depth;
 	private String registerDate;
 	
+	public int getListNo() {
+		return listNo;
+	}
+	public void setListNo(int listNo) {
+		this.listNo = listNo;
+	}
 	public Long getNo() {
 		return no;
 	}

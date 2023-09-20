@@ -32,10 +32,9 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:set var="count" value="${fn:length(list) }" />
 					<c:forEach items="${list }" var="vo" varStatus="status">
 						<tr>
-							<td>${count - status.index }</td>
+							<td>${vo.listNo }</td>
 							<td style="padding-left:${vo.depth*30 }px"><c:if
 									test="${vo.depth>0 }">
 									<img
