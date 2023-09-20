@@ -1,13 +1,14 @@
 package com.poscodx.mysite.security;
 
 import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
-@Target(METHOD)
+@Target({TYPE, METHOD})
 public @interface Auth {
 	// @Auth("test")처럼 값을 넣어줄 경우
 //	public String value() default "";
