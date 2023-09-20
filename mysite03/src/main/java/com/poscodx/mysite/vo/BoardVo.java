@@ -80,6 +80,13 @@ public class BoardVo {
 		this.userEmail = userEmail;
 	}
 	
+	@Override
+	public String toString() {
+		return "BoardVo [no=" + no + ", title=" + title + ", content=" + content + ", userName=" + userName
+				+ ", userEmail=" + userEmail + ", userNo=" + userNo + ", hit=" + hit + ", oNo=" + oNo + ", gNo=" + gNo
+				+ ", depth=" + depth + ", registerDate=" + registerDate + "]";
+	}
+	
 	
 	
 	

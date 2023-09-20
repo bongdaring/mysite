@@ -17,32 +17,18 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post"
-					action="${pageContext.request.contextPath }/board/write">
+					action="${pageContext.request.contextPath }/board/write/${no }">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>
-							<c:choose>
-								<c:when test="${not empty vo.title }">
-									<td><input type="text" name="title" value="${vo.title }"></td>
-								</c:when>
-								<c:otherwise>
-									<td><input type="text" name="title" value=""></td>
-								</c:otherwise>
-							</c:choose>
+							<td><input type="text" name="title" value=""></td>
 						</tr>
 						<tr>
 							<td class="label">내용</td>
-							<c:choose>
-								<c:when test="${not empty vo.content }">
-									<td><textarea id="content" name="content">${vo.content }</textarea></td>
-								</c:when>
-								<c:otherwise>
-									<td><textarea id="content" name="content"></textarea></td>
-								</c:otherwise>
-							</c:choose>
+							<td><textarea id="content" name="content"></textarea></td>
 
 						</tr>
 					</table>

@@ -20,14 +20,13 @@ public class BoardService {
 	public List<BoardVo> findAllList(int page) {
 		
 		int totalSize = this.getTotalSize();
-		List<BoardVo> list = boardRepository.findAll(page-1, totalSize);
+		List<BoardVo> list = boardRepository.findAllByPage(page-1, totalSize);
 		
 		for(BoardVo vo : list) {
 			UserVo userVo = userRepository.findByNo(vo.getUserNo());
 			vo.setUserName(userVo.getName());
 			vo.setUserEmail(userVo.getEmail());
 		}
-		
 		return list;
 	}
 
@@ -66,6 +65,25 @@ public class BoardService {
 
 	public void deleteBoardByNo(Long no) {
 		boardRepository.deleteByNo(no);
+	}
+
+	public void commandBoard(Long no, BoardVo boardVo, UserVo userVo) {
+		BoardVo parentVo = boardRepository.findByNo(no);
+		boardRepository.updateOrderNo(parentVo.getgNo(), parentVo.getoNo()+1);
+		
+		System.out.println("pg:"+parentVo);
+		boardVo.setgNo(parentVo.getgNo());
+		
+		if(parentVo.getDepth() == 0) {
+			boardVo.setoNo(1);
+		} else {			
+			boardVo.setoNo(parentVo.getoNo()+1);
+		}
+		boardVo.setDepth(parentVo.getDepth()+1);
+		boardVo.setUserNo(userVo.getNo());
+		
+		boardRepository.insert(boardVo);
+		
 	}
 
 

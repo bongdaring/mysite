@@ -53,6 +53,23 @@ public class BoardController {
 		return "board/write";
 	}
 	
+	@RequestMapping(value = "/write/{no}", 
+			method = RequestMethod.GET)
+	public String commendBoard(Model model, @PathVariable(value = "no", required = true) Long no) {
+		model.addAttribute("no",no);
+		return "board/write";
+	}
+	
+	@RequestMapping(value = "/write/{no}", 
+			method = RequestMethod.POST)
+	public String commendBoard(HttpSession session, BoardVo boardVo, @PathVariable(value = "no", required = true) Long no) {
+		this.checkUser(session);
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		
+		boardService.commandBoard(no, boardVo, authUser);
+		return "redirect:/board";
+	}
+	
 	@RequestMapping(value = "/comment/{no}", 
 			method = RequestMethod.GET)
 	public String commentBoard(@PathVariable(value = "no", required = true) Long no) {
