@@ -50,10 +50,12 @@ public class AuthInterceptor implements HandlerInterceptor {
 		String role = auth.Role();
 		String authUserRole = authUser.getRole();
 
-		if(!role.equals(authUserRole)) {
-			request.getRequestDispatcher("/WEB-INF/views/user/main/index.jsp")
-			.forward(request, response);
-			return false;
+		if("ADMIN".equals(role)) {
+			if(!role.equals(authUserRole)) {
+				request.getRequestDispatcher("/WEB-INF/views/user/main/index.jsp")
+				.forward(request, response);
+				return false;
+			} 			
 		}
 		//6. 인증확인!!
 		

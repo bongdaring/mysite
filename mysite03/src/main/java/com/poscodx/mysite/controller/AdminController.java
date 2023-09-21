@@ -16,9 +16,9 @@ import com.poscodx.mysite.vo.SiteVo;
 import com.poscodx.mysite.vo.UserVo;
 
 //여기에서 인증받고 들어오는거
+@Auth(Role = "ADMIN")
 @Controller
 @RequestMapping("/admin")
-@Auth(Role = "ADMIN")
 public class AdminController {
 	@Autowired
 	private SiteService siteService;
