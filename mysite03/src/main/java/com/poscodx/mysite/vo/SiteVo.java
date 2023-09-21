@@ -4,8 +4,11 @@ public class SiteVo {
 	private Long no;
 	private String title;
 	private String welcome;
+	// 사진 url 넣기
 	private String profile;
 	private String description;
+	
+	
 	public Long getNo() {
 		return no;
 	}

@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.security.AuthUser;
+import com.poscodx.mysite.service.FileUploadService;
 import com.poscodx.mysite.service.SiteService;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.SiteVo;
@@ -22,18 +25,22 @@ import com.poscodx.mysite.vo.UserVo;
 public class AdminController {
 	@Autowired
 	private SiteService siteService;
+	
+	@Autowired
+	private FileUploadService fileUploadService;
 
 	@RequestMapping("")
 	public String main(Model model) {
-		SiteVo vo = siteService.findSite();
+		SiteVo vo = siteService.findSite(); 
 		model.addAttribute("siteVo", vo);
 		return "admin/main";
 	}
 
 	@RequestMapping(value = "/main/update", method = RequestMethod.POST)
-	public String updateSite(@AuthUser UserVo authUser, @ModelAttribute SiteVo siteVo, Model model) {
-		System.out.println(siteVo);
-		siteService.updateSite(siteVo);
+	public String updateSite(SiteVo siteVo, 
+			@RequestParam("file") MultipartFile file, Model model) {
+		String url = fileUploadService.restore(file);
+		siteService.updateSite(siteVo, url);
 		model.addAttribute("siteVo", siteVo);
 		return "redirect:/admin";
 	}

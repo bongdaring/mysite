@@ -16,7 +16,8 @@ public class SiteService {
 		return null;
 	}
 	
-	public void updateSite(SiteVo vo) {
+	public void updateSite(SiteVo vo, String url) {
+		vo.setProfile(url);
 		repository.update(vo);
 	}
 

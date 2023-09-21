@@ -10,11 +10,18 @@
 
 	<update id="update" parameterType="sitevo">
 
-		<![CDATA[
-			update site set title=#{title }, welcome=#{welcome }, description=#{description } limit 1
-		]]>
-
-
+		<choose>
+			<when test="profile == null">
+				<![CDATA[
+					update site set title=#{title }, welcome=#{welcome }, description=#{description } limit 1
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					update site set title=#{title }, welcome=#{welcome }, profile=#{profile}, description=#{description } limit 1
+				]]>
+			</otherwise>
+		</choose>
 	</update>
 
 </mapper>
