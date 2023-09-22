@@ -1,5 +1,7 @@
 package com.poscodx.mysite.controller;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ import com.poscodx.mysite.vo.UserVo;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	@Autowired
+	private ServletContext servletContext;
 	@Autowired
 	private SiteService siteService;
 	
