@@ -3,6 +3,7 @@ package com.poscodx.mysite.controller;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,7 +27,11 @@ import com.poscodx.mysite.vo.UserVo;
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
-	private ServletContext servletContext;
+	private ApplicationContext applicationContext;
+
+	@Autowired
+	private ServletContext sc;
+	
 	@Autowired
 	private SiteService siteService;
 	
@@ -46,6 +51,7 @@ public class AdminController {
 		String url = fileUploadService.restore(file);
 		siteService.updateSite(siteVo, url);
 		model.addAttribute("siteVo", siteVo);
+		sc.setAttribute("siteVo", siteVo);
 		return "redirect:/admin";
 	}
 

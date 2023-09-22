@@ -10,7 +10,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.poscodx.mysite.service.UserService;
 import com.poscodx.mysite.vo.UserVo;
 
-
 public class LoginInterceptor implements HandlerInterceptor {
 	@Autowired
 	private UserService userService;
