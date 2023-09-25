@@ -2,24 +2,21 @@ package com.poscodx.mysite.controller;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.poscodx.mysite.security.Auth;
-import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.FileUploadService;
 import com.poscodx.mysite.service.SiteService;
-import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.SiteVo;
-import com.poscodx.mysite.vo.UserVo;
+
 
 //여기에서 인증받고 들어오는거
 @Auth(Role = "ADMIN")
@@ -49,9 +46,23 @@ public class AdminController {
 	public String updateSite(SiteVo siteVo, 
 			@RequestParam("file") MultipartFile file, Model model) {
 		String url = fileUploadService.restore(file);
-		siteService.updateSite(siteVo, url);
-		model.addAttribute("siteVo", siteVo);
+		
+		if(url != null) {
+			siteVo.setProfile(url);
+		}
+		SiteVo site = applicationContext.getBean(SiteVo.class);
+		
+		siteService.updateSite(siteVo);
+//		model.addAttribute("siteVo", siteVo);
 		sc.setAttribute("siteVo", siteVo);
+		
+//		site.setTitle(siteVo.getTitle());
+//		site.setWelcome(siteVo.getWelcome());
+//		site.setProfile(siteVo.getProfile());
+//		site.setDescription(siteVo.getDescription());
+		
+		BeanUtils.copyProperties(siteVo, site);
+		
 		return "redirect:/admin";
 	}
 
