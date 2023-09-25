@@ -1,4 +1,4 @@
-package com.poscodx.mysite.security;
+package com.poscodx.mysite.interceptor;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

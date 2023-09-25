@@ -45,7 +45,8 @@
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<bean class="com.poscodx.mysite.security.SiteInterceptor" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<bean class="com.poscodx.mysite.interceptor.SiteInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 
