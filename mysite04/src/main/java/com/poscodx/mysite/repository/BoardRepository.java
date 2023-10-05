@@ -10,6 +10,7 @@ import com.poscodx.mysite.vo.BoardVo;
 
 @Repository
 public class BoardRepository {
+	
 	@Autowired
 	private SqlSession session;
 	private final int PAGE_SIZE = 5;
@@ -24,7 +25,6 @@ public class BoardRepository {
 	
 	
 	public boolean insert(BoardVo vo) {
-		System.out.println("g:" + vo.getgNo());
 		int count = session.insert("board.insert", vo);
 		
 		return count==1;
