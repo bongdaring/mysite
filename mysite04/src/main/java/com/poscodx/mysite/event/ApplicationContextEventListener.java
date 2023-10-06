@@ -12,7 +12,7 @@ import org.springframework.context.event.EventListener;
 import com.poscodx.mysite.service.SiteService;
 import com.poscodx.mysite.vo.SiteVo;
 
-public class ApplicationContextEventList {
+public class ApplicationContextEventListener {
 	
 	@Autowired
 	private ApplicationContext applicationContext;
