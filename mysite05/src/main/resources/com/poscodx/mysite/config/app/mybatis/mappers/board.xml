@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<select id="findAllByPage" resultType="boardvo"
+		parameterType="int">
+		<![CDATA[
+			select b.no, b.title, b.contents as content, b.hit, b.reg_date as registerDate, b.g_no as gNo, 
+				b.o_no as oNo, b.depth, u.no as userNo, u.name as userName, u.email as userEmail
+			from board b join user u on b.user_no = u.no order by g_no DESC, o_no ASC limit 5 offset #{offset }
+		]]>
+	</select>
+
+	<select id="findAll" resultType="boardvo">
+		<![CDATA[
+		  select no, title, contents as content, hit, reg_date as registerDate, g_no as gNo, o_no as oNo, depth, user_no as userNo from board order by g_no DESC, o_no ASC
+		]]>
+	</select>
+
+	<insert id="insert" parameterType="boardvo">
+		<choose>
+			<when test="gNo == 0">
+				<![CDATA[
+				insert into board values(null, #{title }, #{content }, 0, now(), IFNULL((select max(b.g_no) from board b),0)+1, ${oNo }, ${depth }, ${userNo })
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					insert into board values(null, #{title }, #{content }, 0, now(), ${gNo }, ${oNo }, ${depth }, ${userNo })
+				]]>
+			</otherwise>
+		</choose>
+	</insert>
+
+	<select id="findByNo" resultType="boardvo" parameterType="long">
+		<![CDATA[
+		  select b.no, b.title, b.contents as content, b.g_no as gNo, b.o_no as oNo, b.depth, b.user_no as userNo, u.email as userEmail
+			from board b join user u on b.user_no = u.no  where b.no=#{no }
+		]]>
+	</select>
+
+	<update id="updateHitByNo" parameterType="boardvo">
+		<![CDATA[
+		  update board set hit=hit+1  where no=${no }
+		]]>
+	</update>
+
+	<update id="updateOrderNo" parameterType="boardvo">
+		<![CDATA[
+		  update board set o_no=o_no+1 where g_no=#{gNo } and o_no!=0 and o_no >= #{oNo }
+		]]>
+	</update>
+
+	<update id="updateBoard" parameterType="boardvo">
+		<![CDATA[
+		  update board set title=#{title }, contents=#{content } where no=#{no }
+		]]>
+	</update>
+
+	<delete id="deleteByNo" parameterType="boardvo">
+		<![CDATA[
+		  	delete from board where no=#{no } and (select no from user where email = #{userEmail })
+		]]>
+
+	</delete>
+
+</mapper>
