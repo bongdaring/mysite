@@ -98,6 +98,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>springboot-myweb</finalName>
+		<finalName>mysite06</finalName>
 	</build>
 </project>

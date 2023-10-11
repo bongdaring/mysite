@@ -20,7 +20,7 @@ public class SiteInterceptor implements HandlerInterceptor{
 		SiteVo siteVo = (SiteVo)request.getServletContext().getAttribute("siteVo");
 		if(siteVo == null) {
 			siteVo = siteService.findSite();
-			request.getServletContext().setAttribute("siteVo", siteVo);
+			request.getServletContext().setAttribute("vo", siteVo);
 		}
 //		ServletContext sc = request.getServletContext();
 //		if(sc.getAttribute("siteVo") != null) {
