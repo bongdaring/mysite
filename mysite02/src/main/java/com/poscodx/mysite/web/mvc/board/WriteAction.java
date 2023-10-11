@@ -11,7 +11,6 @@ import com.poscodx.mysite.dao.BoardDao;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
 import com.poscodx.web.mvc.Action;
-import com.poscodx.web.utils.WebUtil;
 
 public class WriteAction implements Action {
 

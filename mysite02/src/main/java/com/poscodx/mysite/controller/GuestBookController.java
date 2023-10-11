@@ -1,18 +1,12 @@
 package com.poscodx.mysite.controller;
 
 import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.poscodx.mysite.dao.GuestBookDao;
-import com.poscodx.mysite.vo.GuestBookVo;
 import com.poscodx.mysite.web.mvc.guestbook.GuestBookFactory;
-import com.poscodx.mysite.web.mvc.user.UserActionFactory;
 import com.poscodx.web.mvc.Action;
 
 

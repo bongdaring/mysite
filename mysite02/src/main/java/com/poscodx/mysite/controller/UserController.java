@@ -7,9 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.poscodx.web.mvc.Action;
-import com.poscodx.mysite.web.mvc.user.JoinAction;
-import com.poscodx.mysite.web.mvc.user.JoinFormAction;
-import com.poscodx.mysite.web.mvc.user.JoinSuccessAction;
 import com.poscodx.mysite.web.mvc.user.UserActionFactory;
 
 public class UserController extends HttpServlet {
