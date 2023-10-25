@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +12,110 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath }/assets/css/user.css"
 	rel="stylesheet" type="text/css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+var messageBox = function(title, message, callback) {
+	$("#dialog").attr('title', title);
+	$("#dialog p").text(message);
+	$("#dialog").dialog({
+		width: 340,
+		modal: true,
+		buttons: {
+			"확인": function() {
+				$(this).dialog("close");
+			}
+		},
+		close: callback
+	});			
+}
+
+$(function(){
+	$("#join-form").submit(function(event){
+		event.preventDefault();
+		
+		//1. 이름
+		if($("#name").val() === '') {
+			messageBox('회원가입', '이름은 필수 항목 입니다.', function() {
+				$("#name").focus();
+			});
+			return;
+		}
+		
+		//2. 이메일
+		if($("#email").val() === '') {
+			messageBox('회원가입', '이메일은 필수 항목 입니다.', function() {
+				$("#name").focus();
+			});
+			return;
+		}
+		
+		//3. 이메일 중복 체크
+		if(!$("#img-check-email").is(':visible')) {
+			messageBox('회원가입', '이메일 중복 확인을 해주세요.');
+			return
+		}
+		
+		//4. 비밀번호
+		if($("#password").val() === '') {
+			messageBox('회원가입', '비밀번호는 필수 항목 입니다.', function() {
+				$("#password").focus();
+			});
+			return;
+		}
+		
+		//5. ok
+		this.submit();
+	});
+	
+	$("#email").change(function() {
+		$('#img-check-email').hide();
+		$('#btn-check-email').show();				
+	});
+	
+	$('#btn-check-email').click(function() {
+		var email = $('#email').val();
+		if(email === '') {
+			return;
+		}
+
+		$.ajax({
+			url: '${pageContext.request.contextPath }/api/user?email=' + email,
+			type: 'get',
+			dataType: 'json',
+			success: function(response) {
+				if(response.result !== 'success') {
+					console.error(reponse.message);
+					return;
+				}
+				
+				if(response.data) {
+					$("#dialog").dialog({
+						width: 340,
+						modal: true,
+						buttons: {
+							"확인": function() {
+								$(this).dialog("close");
+							}
+						},
+						close: function() {
+							$("#email").val('').focus();
+						}
+					});
+					
+					return;
+				}
+				
+				$('#img-check-email').show();
+				$('#btn-check-email').hide();
+			},
+			error: function(xhr, status, e) {
+				console.error(status, e);
+			}
+		});
+	});
+});
+</script>
 </head>
 <body>
 	<div id="container">
@@ -43,7 +146,10 @@
 					</p>
 					<label class="block-label" for="email">이메일</label>
 					<form:input path="email" />
-					<input type="button" value="id 중복체크">
+					<input id='btn-check-email' type="button" value="중복체크">
+					<img id='img-check-email'
+						src='${pageContext.request.contextPath }/assets/images/check.png'
+						style='width: 16px; vertical-align: middle; display: none'>
 					<p style="padding: 3px 0 5px 0; text-align: left; color: #f00">
 						<form:errors path="email" />
 					</p>
@@ -53,12 +159,13 @@
 					<form:password path="password" />
 					<p style="padding: 3px 0 5px 0; text-align: left; color: #f00">
 						<form:errors path="password" />
-					</p>	
+					</p>
 
 					<fieldset>
-						<legend>성별</legend>						
-							<form:radiobutton path="gender" value="female" label="여" checked="checked" />
-							<form:radiobutton path="gender" value="mala" label="남" />
+						<legend>성별</legend>
+						<form:radiobutton path="gender" value="female" label="여"
+							checked="checked" />
+						<form:radiobutton path="gender" value="mala" label="남" />
 					</fieldset>
 
 					<fieldset>
@@ -72,8 +179,11 @@
 				</form:form>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
+		<c:import url="/WEB-INF/views/includes/footer.jsp" />
+	</div>
+	<div id="dialog" title="이메일 중복 체크">
+		<p style="line-height: 60px">사용중인 이메일입니다. 다른 이메일을 사용해 주세요.</p>
 	</div>
 </body>
 </html>
