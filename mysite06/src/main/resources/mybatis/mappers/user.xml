@@ -13,6 +13,12 @@
 		<![CDATA[
 			select email, password, gender, name from user where no=#{no }
 		]]>
+		
+	</select>
+	<select id="findByEmail" resultType="uservo" parameterType="string">
+		<![CDATA[
+			select no from user where email=#{email }
+		]]>
 	</select>
 
 	<insert id="insert" parameterType="uservo">
